@@ -1,0 +1,15 @@
+Entities/obj/
+Entities/bin/
+Common/obj/
+Common/bin/
+Infrastructure/obj/
+Infrastructure/bin/
+BlazorWasm/Client/obj/
+BlazorWasm/Client/bin/
+BlazorWasm/Shared/obj/
+BlazorWasm/Shared/bin/
+BlazorWasm/Server/obj/
+BlazorWasm/Server/bin/
+*.gz
+.vs/
+*.dll
