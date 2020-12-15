@@ -13,3 +13,5 @@ BlazorWasm/Server/bin/
 *.gz
 .vs/
 *.dll
+BlazorWasm/Client/.vscode/
+*.user

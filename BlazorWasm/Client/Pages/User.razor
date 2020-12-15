@@ -1,0 +1,31 @@
+﻿@page "/user"
+
+@using BlazorWasm.Shared;
+@using BlazorWasm.Client;
+@using BlazorWasm.Client.HttpRepositories;
+@using System.ComponentModel
+@using AntDesign.TableModels;
+
+@inject IUsersHttpRepository UsersHttpRepository;
+
+<Table TItem="Users" DataSource="@UsersList">
+    <Column @bind-Field="@context.UserId">
+        <a>@context.UserId</a>
+    </Column>
+    <Column @bind-Field="@context.FullName"></Column>
+    <Column @bind-Field="@context.BirthDt">
+
+    </Column>
+    <Column @bind-Field="@context.Phone"></Column>
+    <Column @bind-Field="@context.DelFlg"></Column>
+    <ActionColumn Title="Acton">
+        <Space Size="middle">
+            <SpaceItem>
+                <a>Invite @context.FullName</a>
+            </SpaceItem>
+            <SpaceItem>
+                <a>Delete</a>
+            </SpaceItem>
+        </Space>
+    </ActionColumn>
+</Table>

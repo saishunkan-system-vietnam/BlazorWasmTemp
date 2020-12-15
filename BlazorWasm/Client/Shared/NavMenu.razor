@@ -1,37 +1,65 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">BlazorWasm</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-    </ul>
-</div>
+﻿<Menu Mode="MenuMode.Inline"
+      OnOpenChange=this.onOpenChange
+      OpenKeys=this.openKeys
+      Style="width:256px ;">
+    <SubMenu Key="sub1" TitleTemplate=@sub1Title>
+        <MenuItem Key="1" RouterLink="" RouterMatch="NavLinkMatch.All">Home</MenuItem>
+        <MenuItem Key="2" RouterLink="counter" RouterMatch="NavLinkMatch.All">Counter</MenuItem>
+        <MenuItem Key="3" RouterLink="fetchdata" RouterMatch="NavLinkMatch.All">Fetch data</MenuItem>
+        <MenuItem Key="4" RouterLink="user" RouterMatch="NavLinkMatch.All">Users</MenuItem>
+    </SubMenu>
+    <SubMenu Key="sub2" TitleTemplate=@sub2Title>
+        <MenuItem Key="5">Option 5</MenuItem>
+        <MenuItem Key="6">Option 6</MenuItem>
+        <SubMenu Key="sub3" Title="Submenu">
+            <MenuItem Key="7">Option 7</MenuItem>
+            <MenuItem Key="8">Option 8</MenuItem>
+        </SubMenu>
+    </SubMenu>
+    <SubMenu Key="sub4" TitleTemplate=@sub4Title>
+        <MenuItem Key="9">Option 9</MenuItem>
+        <MenuItem Key="10">Option 10</MenuItem>
+        <MenuItem Key="11">Option 11</MenuItem>
+        <MenuItem Key="12">Option 12</MenuItem>
+    </SubMenu>
+</Menu>
 
 @code {
-    private bool collapseNavMenu = true;
+    RenderFragment sub1Title =
+        @<span>
+            <Icon Type="mail" Theme="outline"></Icon>
+            <span>Navigation One</span>
+        </span>;
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    RenderFragment sub2Title =
+        @<span>
+            <Icon Type="appstore" Theme="outline"></Icon>
+            <span>Navigation Two</span>
+        </span>;
 
-    private void ToggleNavMenu()
+    RenderFragment sub4Title =
+        @<span>
+            <Icon Type="setting" Theme="outline"></Icon>
+            <span>Navigation Three</span>
+        </span>;
+
+    // submenu keys of first level
+    string[] rootSubmenuKeys = {"sub1", "sub2", "sub4"};
+
+    string[] openKeys = {"sub1"};
+
+    void onOpenChange(string[] openKeys)
     {
-        collapseNavMenu = !collapseNavMenu;
+        var latestOpenKey = openKeys.FirstOrDefault(key => !this.openKeys.Contains(key));
+        if (!rootSubmenuKeys.Contains(latestOpenKey))
+        {
+            this.openKeys = openKeys;
+        }
+        else
+        {
+            this.openKeys = !string.IsNullOrEmpty(latestOpenKey) ? new[] {latestOpenKey} : Array.Empty<string>();
+        }
     }
 }
+
+
