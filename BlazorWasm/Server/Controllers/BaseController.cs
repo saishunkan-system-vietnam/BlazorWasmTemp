@@ -11,9 +11,9 @@ namespace BlazorWasm.Server.Controllers
 	{
 		protected IUserService UsersService { get; }
 
-		protected BaseController(IUserService usersService)
+		protected BaseController(IServices services)
 		{
-			this.UsersService = usersService;
+			this.UsersService = services.UserService;
 		}
 	}
 }

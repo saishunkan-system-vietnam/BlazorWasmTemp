@@ -1,5 +1,7 @@
-﻿using Infrastructure.Interfaces;
+﻿using BlazorWasm.Server.Middleware;
+using Infrastructure.Interfaces;
 using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -48,12 +50,18 @@ namespace BlazorWasm.Server.Services
 		public static void AddInfrastructure(this IServiceCollection services)
 		{
 			// Repository
-			services.AddTransient<IUsersRepository, UsersRepository>();
 			services.AddTransient<IDbRespository, DbRespository>();
+			services.AddTransient<IUsersRepository, UsersRepository>();
 			services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 			// Service
-			services.AddTransient<IUserService, UsersService>(); 
+			services.AddTransient<IUserService, UsersService>();
+			services.AddTransient<IServices, Services>();
+		}
+
+		public static void AddMiddleware(this IApplicationBuilder app)
+		{
+			app.UseMiddleware<ErrorHandlingMiddleware>();
 		}
 	}
 }

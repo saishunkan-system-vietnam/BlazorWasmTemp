@@ -14,12 +14,11 @@ namespace BlazorWasm.Server.Controllers
 	public class UsersController : BaseController
 	{
 
-		public UsersController(IUserService usersService) : base(usersService)
+		public UsersController(IServices services) : base(services)
 		{
 
 		}
 
-		[EnableCors]
 		[HttpGet]
 		public async Task<IActionResult> GetAll()
 		{

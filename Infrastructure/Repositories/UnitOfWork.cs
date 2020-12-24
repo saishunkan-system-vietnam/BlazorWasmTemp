@@ -9,11 +9,11 @@ namespace Infrastructure.Repositories
 {
 	public class UnitOfWork : IUnitOfWork
 	{
+		public IUsersRepository Users { get; }
+
 		public UnitOfWork(IUsersRepository usersRepository)
 		{
 			this.Users = usersRepository;
 		}
-		public IUsersRepository Users { get; }
-
 	}
 }

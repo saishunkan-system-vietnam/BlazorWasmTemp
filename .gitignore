@@ -14,3 +14,4 @@ BlazorWasm/Server/bin/
 .vs/
 *.dll
 *.user
+*.log

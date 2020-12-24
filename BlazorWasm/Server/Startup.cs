@@ -47,6 +47,15 @@ namespace BlazorWasm.Server
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
+			/*Exception Handling
+			HTTPS Redirection
+			Static Files
+			Cookie Policy
+			Routing
+			Authentication
+			Authorization
+			Session
+			Endpoint Routing*/
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
@@ -58,6 +67,8 @@ namespace BlazorWasm.Server
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
+
+			app.AddMiddleware();
 
 			app.UseHttpsRedirection();
 			app.UseBlazorFrameworkFiles();
@@ -73,8 +84,6 @@ namespace BlazorWasm.Server
 				endpoints.MapControllers();
 				endpoints.MapFallbackToFile("index.html");
 			});
-
-
 		}
 	}
 }
