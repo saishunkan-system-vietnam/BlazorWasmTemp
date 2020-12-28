@@ -30,7 +30,7 @@ namespace BlazorWasm.Client.HttpRepositories
 			}
 			catch(Exception e)
 			{
-
+				
 			}
 
 			return users;

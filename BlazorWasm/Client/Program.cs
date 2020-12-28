@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 namespace BlazorWasm.Client
 {
@@ -17,11 +18,16 @@ namespace BlazorWasm.Client
 		{
 			var builder = WebAssemblyHostBuilder.CreateDefault(args);
 			builder.RootComponents.Add<App>("#app");
-
 			builder.Services.AddAntDesign();
 
-			builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5011/api/") });
-			//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+			builder.Services.AddHttpClient("API", (sp, cl) =>
+			{
+				cl.BaseAddress = new Uri("https://localhost:5011/api/");
+				cl.EnableIntercept(sp);
+			});
+			builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>().CreateClient("API"));
+			builder.Services.AddHttpClientInterceptor();
+
 			builder.Services.AddScoped<IUsersHttpRepository, UsersHttpRepository>();
 
 			await builder.Build().RunAsync();

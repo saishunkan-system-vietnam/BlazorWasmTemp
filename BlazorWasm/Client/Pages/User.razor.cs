@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace BlazorWasm.Client.Pages
 {
-	public partial class User : ComponentBase
+	public partial class User : ComponentBase, IDisposable
 	{
 		public List<Users> UsersList { get; set; } = new List<Users>();
 
 		[Inject]
 		public IUsersHttpRepository UsersRepo { get; set; }
 
+		[Inject]
+		public HttpInterceptorService Interceptor { get; set; }
+
 		protected async override Task OnInitializedAsync()
 		{
+			Interceptor.RegisterEvent();
 			UsersList = await UsersRepo.GetUsers();
-
-			//just for testing
-			foreach (var product in UsersList)
-			{
-
-			}
 		}
+
+		public void Dispose() => Interceptor.DisposeEvent();
 	}
 }
